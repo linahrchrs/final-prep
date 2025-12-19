@@ -2,8 +2,6 @@
  * Document Conversion Processing with Spark
 """
 from pyspark import SparkContext, SparkConf
-from typing import List, Tuple
-
 
 class DocumentProcessor:
     MASTER_URL = "spark://10.10.10.10:7070"
@@ -15,9 +13,11 @@ class DocumentProcessor:
         sc = SparkContext(conf=conf)
         
         requestRDD = sc.parallelize(requests)
-        
+
+   
         conversionResultRDD = requestRDD.map(lambda request: (request.getTargetFormat(), get_conversion_time(request.getDocumentPath(), request.getTargetFormat(), request.getQualityLevel())))
         
+       
         totalConversionTimeByFormatRDD = conversionResultRDD.reduceByKey(lambda a, b: a + b)
         
         totalConversionTimesByFormat = totalConversionTimeByFormatRDD.collect()
@@ -28,7 +28,7 @@ class DocumentProcessor:
         sc.stop()
         return totalConversionTimesByFormat
 
-
+#why if __name__ == "__main__":
 if __name__ == "__main__":
     requests = [
         DCRequest("/docs/file1.txt", "PDF", "High"),

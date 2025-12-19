@@ -31,8 +31,6 @@ class Driver:
         ]
         
         #Convert list into RDD for parallel processing
-        #sc.parallelize() for lists (array, list, set)
-        #sc.textFile() for external files (HDFS, S3, local FS)
         ratingRDD = sc.parallelize(ratings)
         
         #Transform each rating object into a tuple (Rating("P001", 5) becomes ("P001", 5))
